@@ -37,10 +37,10 @@ namespace vocab
 
 
 
-		private XmlDataDocument xml_doc = new XmlDataDocument ();
 		private const String xml_path = "/home/mru/uni/current/dotnet/vocab/vocab/myvocab.xml";
 		private void load ()
 		{
+			XmlDataDocument xml_doc = new XmlDataDocument ();
 			
 			xml_doc.Load (xml_path);
 			
@@ -67,6 +67,53 @@ namespace vocab
 			}
 		}
 
+		private void save() {
+			XmlDataDocument xml_doc = new XmlDataDocument ();
+			XmlNode root = xml_doc.CreateElement("vocab");
+						
+			foreach (LessonNode l in Store) {
+				
+				XmlNode lesson = xml_doc.CreateElement("lesson");
+				
+				XmlAttribute a_id = xml_doc.CreateAttribute("id");
+				XmlAttribute a_description = xml_doc.CreateAttribute("description");
+				a_id.Value = l.Id.ToString();
+				a_description.Value = l.Description;
+				
+				
+				
+				lesson.Attributes.Append(a_id);
+				lesson.Attributes.Append(a_description);
+				
+				
+				foreach (PairNode p in l.PairStore) {
+				
+					XmlNode pair = xml_doc.CreateElement("pair");
+					
+					XmlNode en = xml_doc.CreateElement("en");
+					XmlNode de = xml_doc.CreateElement("de");
+					
+					en.InnerText = p.En;
+					de.InnerText = p.De;
+					
+					pair.AppendChild(en);
+					pair.AppendChild(de);
+				
+					lesson.AppendChild(pair);
+				}
+				
+				root.AppendChild(lesson);
+			}
+			
+			
+			xml_doc.AppendChild(root);
+			
+			xml_doc.Save(xml_path + "_new.xml");
+			
+			
+
+		}
+		
 		private string getAttributeOrDefault(XmlNode n, string attribute, string _default) {
 			var att = n.Attributes[attribute];
 			if (att==null) return _default;
@@ -76,8 +123,6 @@ namespace vocab
 
 
 		#region event handlers
-
-
 
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
@@ -117,6 +162,7 @@ namespace vocab
 		
 		protected virtual void OnQuitAction1Activated (object sender, System.EventArgs e)
 		{
+			save();
 			Application.Quit ();
 		}
 		

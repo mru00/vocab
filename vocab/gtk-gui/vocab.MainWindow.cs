@@ -26,9 +26,13 @@ namespace vocab
 
 		private global::Gtk.Toolbar toolbar1;
 
+		private global::Gtk.Notebook notebook1;
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
 		private global::Gtk.NodeView nodeview1;
+
+		private global::Gtk.Label label1;
 
 		private global::Gtk.Statusbar statusbar1;
 
@@ -86,6 +90,11 @@ namespace vocab
 			w3.Expand = false;
 			w3.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
+			this.notebook1 = new global::Gtk.Notebook ();
+			this.notebook1.CanFocus = true;
+			this.notebook1.Name = "notebook1";
+			this.notebook1.CurrentPage = 0;
+			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
 			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -94,19 +103,26 @@ namespace vocab
 			this.nodeview1.CanFocus = true;
 			this.nodeview1.Name = "nodeview1";
 			this.GtkScrolledWindow.Add (this.nodeview1);
-			this.vbox1.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));
-			w5.Position = 2;
+			this.notebook1.Add (this.GtkScrolledWindow);
+			// Notebook tab
+			this.label1 = new global::Gtk.Label ();
+			this.label1.Name = "label1";
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Lesson Overview");
+			this.notebook1.SetTabLabel (this.GtkScrolledWindow, this.label1);
+			this.label1.ShowAll ();
+			this.vbox1.Add (this.notebook1);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.notebook1]));
+			w6.Position = 2;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar1 = new global::Gtk.Statusbar ();
 			this.statusbar1.Name = "statusbar1";
 			this.statusbar1.Spacing = 6;
 			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-			w6.PackType = ((global::Gtk.PackType)(1));
-			w6.Position = 3;
-			w6.Expand = false;
-			w6.Fill = false;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+			w7.PackType = ((global::Gtk.PackType)(1));
+			w7.Position = 3;
+			w7.Expand = false;
+			w7.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -115,11 +131,10 @@ namespace vocab
 			this.DefaultHeight = 560;
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-			this.DestroyEvent += new global::Gtk.DestroyEventHandler (this.OnDestroyEvent);
-			this.FrameEvent += new global::Gtk.FrameEventHandler (this.OnFrameEvent);
 			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 			this.addAction.Activated += new global::System.EventHandler (this.OnAddActionActivated);
 			this.aboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
+			this.nodeview1.RowActivated += new global::Gtk.RowActivatedHandler (this.OnNodeview1RowActivated);
 		}
 	}
 }

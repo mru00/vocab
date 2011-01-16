@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <vocab>
-	<lesson id="1">
-		<pair>
-			<en>go</en>
-			<de>gehen</de>
-		</pair>
-	</lesson>
+  <lesson id="1" description="first lesson">
+    <pair>
+      <en>go</en>
+      <de>gehen</de>
+    </pair>
+  </lesson>
+  <lesson id="100" description="second lesson" />
+  <lesson id="100" />
 </vocab>

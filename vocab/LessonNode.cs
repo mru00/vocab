@@ -3,18 +3,36 @@ using Gtk;
 
 namespace vocab
 {
-	[TreeNode (ListOnly=true)]
+	//[TreeNode (ListOnly=true)]
 	public class LessonNode : Gtk.TreeNode
 	{
 		[Gtk.TreeNodeValue (Column=0)]
 		public int Id;
 		
-		public LessonNode (int id)
+		[Gtk.TreeNodeValue (Column=1)]
+		public String Description;
+		
+		public LessonNode (int id, string description)
 		{
 			Id = id;
+			Description = description;
+		}
+	}
+	
+	public class PairNode : Gtk.TreeNode
+	{
+		[Gtk.TreeNodeValue (Column=0)]
+		public String En;
+
+		[Gtk.TreeNodeValue (Column=0)]
+		public String De;
+
+		public PairNode(string en, string de) 
+		{
+			En = en; De = de;
 		}
 		
-		
 	}
+	
 }
 

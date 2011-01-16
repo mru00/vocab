@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Xml;
 using Gtk;
+using System.Collections;
 
 namespace vocab
 {
@@ -24,7 +25,8 @@ namespace vocab
 		{
 			Build ();
 			nodeview1.NodeStore = Store;
-			nodeview1.AppendColumn ("Lesson", new Gtk.CellRendererText (), "text", 0);
+			nodeview1.AppendColumn ("Lesson", new Gtk.CellRendererSpin (), "text", 0);
+			nodeview1.AppendColumn ("Description", new Gtk.CellRendererText (), "text", 1);
 			nodeview1.ShowAll ();
 			load ();
 		}
@@ -46,11 +48,17 @@ namespace vocab
 				Console.Out.WriteLine ("node!");
 				Console.Out.WriteLine ("{0} - {1}", n.Name, n.Attributes["id"].Value);
 				
-				Store.AddNode (new LessonNode (Convert.ToInt32 (n.Attributes["id"].Value)));
+				int id = Convert.ToInt32 (getAttributeOrDefault(n,"id", "-1"));
+				string description = getAttributeOrDefault(n, "description", "No description set");
+				Store.AddNode (new LessonNode (id, description));
 			}
 		}
 
-
+		private string getAttributeOrDefault(XmlNode n, string attribute, string _default) {
+			var att = n.Attributes[attribute];
+			if (att==null) return _default;
+			return att.Value;
+		}
 
 
 
@@ -69,11 +77,7 @@ namespace vocab
 
 		protected virtual void OnAddActionActivated (object sender, System.EventArgs e)
 		{
-			var root = xml_doc.SelectSingleNode ("/vocab");
-			var lessonElement = xml_doc.CreateElement ("lesson");
-			lessonElement.SetAttribute ("id", "100");
-			root.AppendChild (lessonElement);
-			xml_doc.Save (xml_path);
+			Store.AddNode (new LessonNode (-1, "No description set"));
 		}
 
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -87,22 +91,24 @@ namespace vocab
 			Application.Quit ();
 		}
 
-		protected virtual void OnDestroyEvent (object o, Gtk.DestroyEventArgs args)
-		{
-			
-		}
-
-		protected virtual void OnFrameEvent (object o, Gtk.FrameEventArgs args)
-		{
-			
-		}
-		
 		#endregion
-		
-		
-		
-		
-		
+		protected virtual void OnNodeview1RowActivated (object o, Gtk.RowActivatedArgs args)
+		{
+			NodeView v = (NodeView)o;
+			
+			Console.Out.Write("dict size: {0}", v.Selection.Data.Count);
+			foreach(DictionaryEntry e in v.Selection.Data) {
+				Console.Out.WriteLine("dict: {0} -> {1}", e.Key, e.Value);
+			}
+			
+			
+//			Gtk.NodeSelection selection = (Gtk.NodeSelection) v.Selection;
+//			LessonNode node = (LessonNode) selection.SelectedNode;
+
+			LessonNode l = (LessonNode)v.NodeSelection.SelectedNode;
+			Console.Out.WriteLine("Activated! {0}", l.Description);
+//			notebook1.Add(new LessonView());
+		}
 		
 	}
 	

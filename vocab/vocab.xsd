@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="vocab" type="vocab_t" />
+	<xs:complexType name="vocab_t">
+		<xs:sequence>
+			<xs:element name="lesson" type="lesson_t" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pair_t">
+		<xs:sequence>
+			<xs:element name="en" type="xs:string" />
+			<xs:element name="de" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+		<xs:complexType name="lesson_t">
+		<xs:sequence>
+			<xs:element name="pair" type="pair_t" />
+			
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

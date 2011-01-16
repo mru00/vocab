@@ -12,6 +12,16 @@ namespace vocab
 		[Gtk.TreeNodeValue (Column=1)]
 		public String Description;
 		
+		Gtk.NodeStore pairStore;
+		public Gtk.NodeStore PairStore {
+			get {
+				if (pairStore == null) {
+					pairStore = new Gtk.NodeStore (typeof(PairNode));					
+				}
+				return pairStore;
+			}
+		}
+		
 		public LessonNode (int id, string description)
 		{
 			Id = id;
@@ -24,7 +34,7 @@ namespace vocab
 		[Gtk.TreeNodeValue (Column=0)]
 		public String En;
 
-		[Gtk.TreeNodeValue (Column=0)]
+		[Gtk.TreeNodeValue (Column=1)]
 		public String De;
 
 		public PairNode(string en, string de) 

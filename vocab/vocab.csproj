@@ -74,6 +74,14 @@
     <Compile Include="gtk-gui\vocab.MainWindow.cs" />
     <Compile Include="LessonView.cs" />
     <Compile Include="gtk-gui\vocab.LessonView.cs" />
+    <Compile Include="LessonOverviewView.cs" />
+    <Compile Include="gtk-gui\vocab.LessonOverviewView.cs" />
+    <Compile Include="EditLessonDialog.cs" />
+    <Compile Include="gtk-gui\vocab.EditLessonDialog.cs" />
+    <Compile Include="EditPairDialog.cs" />
+    <Compile Include="gtk-gui\vocab.EditPairDialog.cs" />
+    <Compile Include="PlaceHolderWidget.cs" />
+    <Compile Include="gtk-gui\vocab.PlaceHolderWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.desktop" />

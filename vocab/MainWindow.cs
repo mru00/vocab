@@ -20,15 +20,19 @@ namespace vocab
 			}
 		}
 
-
+		
+		LessonOverviewView overview;
+			
 		public MainWindow () : base(Gtk.WindowType.Toplevel)
 		{
 			Build ();
-			nodeview1.NodeStore = Store;
-			nodeview1.AppendColumn ("Lesson", new Gtk.CellRendererSpin (), "text", 0);
-			nodeview1.AppendColumn ("Description", new Gtk.CellRendererText (), "text", 1);
-			nodeview1.ShowAll ();
 			load ();
+			
+			overview = new LessonOverviewView(Store);
+			overview.openLesson += OnOpenLesson;
+			overview.ShowAll();
+			placeholderwidget1.Current = overview;
+			
 		}
 
 
@@ -40,17 +44,26 @@ namespace vocab
 			
 			xml_doc.Load (xml_path);
 			
-			var nodes = xml_doc.SelectNodes ("//lesson");
-			Console.Out.WriteLine (nodes.Count);
+			var lessonNodes = xml_doc.SelectNodes ("//lesson");
+			Console.Out.WriteLine (lessonNodes.Count);
 			
 			Console.Out.WriteLine ("loading");
-			foreach (XmlNode n in nodes) {
+			foreach (XmlNode ln in lessonNodes) {
 				Console.Out.WriteLine ("node!");
-				Console.Out.WriteLine ("{0} - {1}", n.Name, n.Attributes["id"].Value);
+				Console.Out.WriteLine ("{0} - {1}", ln.Name, ln.Attributes["id"].Value);
 				
-				int id = Convert.ToInt32 (getAttributeOrDefault(n,"id", "-1"));
-				string description = getAttributeOrDefault(n, "description", "No description set");
-				Store.AddNode (new LessonNode (id, description));
+				int id = Convert.ToInt32 (getAttributeOrDefault(ln,"id", "-1"));
+				string description = getAttributeOrDefault(ln, "description", "No description set");
+				
+				var lesson = new LessonNode (id, description);
+				
+				var pairNodes = ln.SelectNodes ("pair");
+				foreach (XmlNode pn in pairNodes) {
+					lesson.PairStore.AddNode(new PairNode(pn.SelectSingleNode("en/text()").Value, 
+					                                      pn.SelectSingleNode("de/text()").Value));
+				}
+				
+				Store.AddNode (lesson);
 			}
 		}
 
@@ -64,21 +77,7 @@ namespace vocab
 
 		#region event handlers
 
-		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
-		{
-			var d = new AboutDialog ();
-			d.Version = "1.0";
-			d.Website = "http://sisyphus.teil.cc/~mru";
-			d.Authors = new string[] { "mru" };
-			
-			d.Run ();
-			d.Destroy ();
-		}
 
-		protected virtual void OnAddActionActivated (object sender, System.EventArgs e)
-		{
-			Store.AddNode (new LessonNode (-1, "No description set"));
-		}
 
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
@@ -86,30 +85,48 @@ namespace vocab
 			a.RetVal = true;
 		}
 
-		protected virtual void OnQuitActionActivated (object sender, System.EventArgs e)
+		#endregion
+
+		void OnOpenLesson(object o, System.EventArgs args) {
+			var args2 = (OpenLessonEventArgs) args;
+			var lesson = args2.Node;
+			var view = new LessonView(lesson);
+			view.ShowAll();
+			view.closeEvent += OnCloseLesson;
+			ShowAll();
+			
+			placeholderwidget1.Current = view;
+		}
+		
+		void OnCloseLesson(object o, System.EventArgs args) {
+			
+			Widget old = placeholderwidget1.Current;
+			placeholderwidget1.Current = overview;
+			old.Destroy();
+		}
+		
+		protected virtual void OnAboutAction1Activated (object sender, System.EventArgs e)
+		{			var d = new AboutDialog ();
+			d.Version = "1.0";
+			d.Website = "http://sisyphus.teil.cc/~mru";
+			d.Authors = new string[] { "mru" };
+			
+			d.Run ();
+			d.Destroy ();
+		}
+		
+		protected virtual void OnQuitAction1Activated (object sender, System.EventArgs e)
 		{
 			Application.Quit ();
 		}
-
-		#endregion
-		protected virtual void OnNodeview1RowActivated (object o, Gtk.RowActivatedArgs args)
-		{
-			NodeView v = (NodeView)o;
-			
-			Console.Out.Write("dict size: {0}", v.Selection.Data.Count);
-			foreach(DictionaryEntry e in v.Selection.Data) {
-				Console.Out.WriteLine("dict: {0} -> {1}", e.Key, e.Value);
-			}
-			
-			
-//			Gtk.NodeSelection selection = (Gtk.NodeSelection) v.Selection;
-//			LessonNode node = (LessonNode) selection.SelectedNode;
-
-			LessonNode l = (LessonNode)v.NodeSelection.SelectedNode;
-			Console.Out.WriteLine("Activated! {0}", l.Description);
-//			notebook1.Add(new LessonView());
-		}
 		
+	}
+	
+	public class OpenLessonEventArgs : EventArgs {
+		public LessonNode Node;
+		public OpenLessonEventArgs(LessonNode n) {
+			Node = n;
+		}
 	}
 	
 }

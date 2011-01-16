@@ -8,31 +8,17 @@ namespace vocab
 
 		private global::Gtk.Action FileAction;
 
-		private global::Gtk.Action QuitAction;
+		private global::Gtk.Action HelpAction;
 
-		private global::Gtk.Action FileAction1;
+		private global::Gtk.Action aboutAction1;
 
-		private global::Gtk.Action QuitAction1;
-
-		private global::Gtk.Action quitAction;
-
-		private global::Gtk.Action addAction;
-
-		private global::Gtk.Action aboutAction;
+		private global::Gtk.Action quitAction1;
 
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.MenuBar menubar3;
 
-		private global::Gtk.Toolbar toolbar1;
-
-		private global::Gtk.Notebook notebook1;
-
-		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-
-		private global::Gtk.NodeView nodeview1;
-
-		private global::Gtk.Label label1;
+		private global::vocab.PlaceHolderWidget placeholderwidget1;
 
 		private global::Gtk.Statusbar statusbar1;
 
@@ -42,25 +28,18 @@ namespace vocab
 			// Widget vocab.MainWindow
 			this.UIManager = new global::Gtk.UIManager ();
 			global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
-			this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("File"), null, null);
+			this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("_File"), null, null);
 			this.FileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("File");
 			w1.Add (this.FileAction, null);
-			this.QuitAction = new global::Gtk.Action ("QuitAction", global::Mono.Unix.Catalog.GetString ("Quit"), null, null);
-			this.QuitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Quit");
-			w1.Add (this.QuitAction, null);
-			this.FileAction1 = new global::Gtk.Action ("FileAction1", global::Mono.Unix.Catalog.GetString ("_File"), null, null);
-			this.FileAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("File");
-			w1.Add (this.FileAction1, null);
-			this.QuitAction1 = new global::Gtk.Action ("QuitAction1", global::Mono.Unix.Catalog.GetString ("Quit"), null, null);
-			this.QuitAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Quit");
-			w1.Add (this.QuitAction1, null);
-			this.quitAction = new global::Gtk.Action ("quitAction", null, null, "gtk-quit");
-			w1.Add (this.quitAction, null);
-			this.addAction = new global::Gtk.Action ("addAction", null, null, "gtk-add");
-			w1.Add (this.addAction, null);
-			this.aboutAction = new global::Gtk.Action ("aboutAction", global::Mono.Unix.Catalog.GetString ("About"), global::Mono.Unix.Catalog.GetString ("show About Dialog"), "gtk-about");
-			this.aboutAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("About");
-			w1.Add (this.aboutAction, null);
+			this.HelpAction = new global::Gtk.Action ("HelpAction", global::Mono.Unix.Catalog.GetString ("Help"), null, null);
+			this.HelpAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Help");
+			w1.Add (this.HelpAction, null);
+			this.aboutAction1 = new global::Gtk.Action ("aboutAction1", global::Mono.Unix.Catalog.GetString ("_About"), null, "gtk-about");
+			this.aboutAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("_About");
+			w1.Add (this.aboutAction1, null);
+			this.quitAction1 = new global::Gtk.Action ("quitAction1", global::Mono.Unix.Catalog.GetString ("_Quit"), null, "gtk-quit");
+			this.quitAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Quit");
+			w1.Add (this.quitAction1, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "vocab.MainWindow";
@@ -71,7 +50,7 @@ namespace vocab
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='menubar3'><menu name='FileAction1' action='FileAction1'/></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='menubar3'><menu name='FileAction' action='FileAction'><menuitem name='quitAction1' action='quitAction1'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction1' action='aboutAction1'/></menu></menubar></ui>");
 			this.menubar3 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar3")));
 			this.menubar3.Name = "menubar3";
 			this.vbox1.Add (this.menubar3);
@@ -80,49 +59,22 @@ namespace vocab
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='quitAction' action='quitAction'/><toolitem name='addAction' action='addAction'/><toolitem name='aboutAction' action='aboutAction'/></toolbar></ui>");
-			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
-			this.toolbar1.Name = "toolbar1";
-			this.toolbar1.ShowArrow = false;
-			this.vbox1.Add (this.toolbar1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.toolbar1]));
+			this.placeholderwidget1 = new global::vocab.PlaceHolderWidget ();
+			this.placeholderwidget1.Events = ((global::Gdk.EventMask)(256));
+			this.placeholderwidget1.Name = "placeholderwidget1";
+			this.vbox1.Add (this.placeholderwidget1);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.placeholderwidget1]));
 			w3.Position = 1;
-			w3.Expand = false;
-			w3.Fill = false;
-			// Container child vbox1.Gtk.Box+BoxChild
-			this.notebook1 = new global::Gtk.Notebook ();
-			this.notebook1.CanFocus = true;
-			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
-			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
-			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
-			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-			this.nodeview1 = new global::Gtk.NodeView ();
-			this.nodeview1.CanFocus = true;
-			this.nodeview1.Name = "nodeview1";
-			this.GtkScrolledWindow.Add (this.nodeview1);
-			this.notebook1.Add (this.GtkScrolledWindow);
-			// Notebook tab
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Lesson Overview");
-			this.notebook1.SetTabLabel (this.GtkScrolledWindow, this.label1);
-			this.label1.ShowAll ();
-			this.vbox1.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.notebook1]));
-			w6.Position = 2;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar1 = new global::Gtk.Statusbar ();
 			this.statusbar1.Name = "statusbar1";
 			this.statusbar1.Spacing = 6;
 			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-			w7.PackType = ((global::Gtk.PackType)(1));
-			w7.Position = 3;
-			w7.Expand = false;
-			w7.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+			w4.PackType = ((global::Gtk.PackType)(1));
+			w4.Position = 2;
+			w4.Expand = false;
+			w4.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -131,10 +83,8 @@ namespace vocab
 			this.DefaultHeight = 560;
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
-			this.addAction.Activated += new global::System.EventHandler (this.OnAddActionActivated);
-			this.aboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
-			this.nodeview1.RowActivated += new global::Gtk.RowActivatedHandler (this.OnNodeview1RowActivated);
+			this.aboutAction1.Activated += new global::System.EventHandler (this.OnAboutAction1Activated);
+			this.quitAction1.Activated += new global::System.EventHandler (this.OnQuitAction1Activated);
 		}
 	}
 }

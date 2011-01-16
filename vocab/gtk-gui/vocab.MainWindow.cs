@@ -43,7 +43,7 @@ namespace vocab
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "vocab.MainWindow";
-			this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
+			this.Title = global::Mono.Unix.Catalog.GetString ("Vocab");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child vocab.MainWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox ();

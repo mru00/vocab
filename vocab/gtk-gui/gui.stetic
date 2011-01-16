@@ -36,7 +36,7 @@
       </action>
     </action-group>
     <property name="MemberName" />
-    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="Title" translatable="yes">Vocab</property>
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
@@ -222,6 +222,8 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="ShowScrollbars">True</property>
+                <property name="Reorderable">True</property>
+                <property name="RulesHint">True</property>
                 <signal name="RowActivated" handler="OnNodeview3RowActivated" />
                 <signal name="CursorChanged" handler="OnNodeview3CursorChanged" />
               </widget>

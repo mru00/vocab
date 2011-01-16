@@ -45,12 +45,8 @@ namespace vocab
 			xml_doc.Load (xml_path);
 			
 			var lessonNodes = xml_doc.SelectNodes ("//lesson");
-			Console.Out.WriteLine (lessonNodes.Count);
 			
-			Console.Out.WriteLine ("loading");
 			foreach (XmlNode ln in lessonNodes) {
-				Console.Out.WriteLine ("node!");
-				Console.Out.WriteLine ("{0} - {1}", ln.Name, ln.Attributes["id"].Value);
 				
 				int id = Convert.ToInt32 (getAttributeOrDefault(ln,"id", "-1"));
 				string description = getAttributeOrDefault(ln, "description", "No description set");
@@ -108,7 +104,7 @@ namespace vocab
 			
 			xml_doc.AppendChild(root);
 			
-			xml_doc.Save(xml_path + "_new.xml");
+			xml_doc.Save(xml_path);
 			
 			
 

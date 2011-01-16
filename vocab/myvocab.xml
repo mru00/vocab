@@ -1,11 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <vocab>
   <lesson id="1" description="first lesson">
     <pair>
-      <en>go</en>
+      <en>go,walk</en>
+      <de>gehen</de>
+    </pair>
+    <pair>
+      <en>walk</en>
+      <de>gehen</de>
+    </pair>
+    <pair>
+      <en>go,walk</en>
       <de>gehen</de>
     </pair>
   </lesson>
-  <lesson id="100" description="second lesson" />
-  <lesson id="100" />
+  <lesson id="5" description="second lesson">
+    <pair>
+      <en>zack</en>
+      <de>prack</de>
+    </pair>
+    <pair>
+      <en>654</en>
+      <de>654</de>
+    </pair>
+  </lesson>
+  <lesson id="8" description="New Lesson" />
+  <lesson id="9" description="New Lesson" />
+  <lesson id="10" description="New Lesson" />
 </vocab>

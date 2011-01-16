@@ -24,7 +24,7 @@ namespace vocab
 		
 		public LessonNode (int id, string description)
 		{
-			Id = id;
+			Id = ID;
 			Description = description;
 		}
 	}

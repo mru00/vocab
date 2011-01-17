@@ -3,7 +3,7 @@ using Gtk;
 
 namespace vocab
 {
-	//[TreeNode (ListOnly=true)]
+	[TreeNode (ListOnly=true)]
 	public class LessonNode : Gtk.TreeNode
 	{
 		[Gtk.TreeNodeValue (Column=0)]
@@ -11,6 +11,11 @@ namespace vocab
 		
 		[Gtk.TreeNodeValue (Column=1)]
 		public String Description;
+
+		[Gtk.TreeNodeValue (Column=2)]
+		public int PairCount {
+			get { int i = 0; foreach(var _ in PairStore) { i++; }; return i;}
+		}	
 		
 		Gtk.NodeStore pairStore;
 		public Gtk.NodeStore PairStore {

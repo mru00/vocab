@@ -12,7 +12,9 @@ namespace vocab
 
 		private global::Gtk.Action aboutAction1;
 
-		private global::Gtk.Action quitAction1;
+		private global::Gtk.Action quitAction;
+
+		private global::Gtk.Action saveAction;
 
 		private global::Gtk.VBox vbox1;
 
@@ -37,9 +39,12 @@ namespace vocab
 			this.aboutAction1 = new global::Gtk.Action ("aboutAction1", global::Mono.Unix.Catalog.GetString ("_About"), null, "gtk-about");
 			this.aboutAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("_About");
 			w1.Add (this.aboutAction1, null);
-			this.quitAction1 = new global::Gtk.Action ("quitAction1", global::Mono.Unix.Catalog.GetString ("_Quit"), null, "gtk-quit");
-			this.quitAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Quit");
-			w1.Add (this.quitAction1, null);
+			this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("_Quit"), null, "gtk-quit");
+			this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Quit");
+			w1.Add (this.quitAction, null);
+			this.saveAction = new global::Gtk.Action ("saveAction", global::Mono.Unix.Catalog.GetString ("_Save"), null, "gtk-save");
+			this.saveAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Save");
+			w1.Add (this.saveAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "vocab.MainWindow";
@@ -50,7 +55,7 @@ namespace vocab
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='menubar3'><menu name='FileAction' action='FileAction'><menuitem name='quitAction1' action='quitAction1'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction1' action='aboutAction1'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='menubar3'><menu name='FileAction' action='FileAction'><menuitem name='saveAction' action='saveAction'/><menuitem name='quitAction' action='quitAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction1' action='aboutAction1'/></menu></menubar></ui>");
 			this.menubar3 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar3")));
 			this.menubar3.Name = "menubar3";
 			this.vbox1.Add (this.menubar3);
@@ -84,7 +89,8 @@ namespace vocab
 			this.Show ();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.aboutAction1.Activated += new global::System.EventHandler (this.OnAboutAction1Activated);
-			this.quitAction1.Activated += new global::System.EventHandler (this.OnQuitAction1Activated);
+			this.quitAction.Activated += new global::System.EventHandler (this.OnQuitAction1Activated);
+			this.saveAction.Activated += new global::System.EventHandler (this.OnSaveActionActivated);
 		}
 	}
 }

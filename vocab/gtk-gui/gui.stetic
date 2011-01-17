@@ -27,12 +27,19 @@
         <property name="StockId">gtk-about</property>
         <signal name="Activated" handler="OnAboutAction1Activated" />
       </action>
-      <action id="quitAction1">
+      <action id="quitAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Quit</property>
         <property name="ShortLabel" translatable="yes">_Quit</property>
         <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="OnQuitAction1Activated" />
+      </action>
+      <action id="saveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Save</property>
+        <property name="ShortLabel" translatable="yes">_Save</property>
+        <property name="StockId">gtk-save</property>
+        <signal name="Activated" handler="OnSaveActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -48,7 +55,8 @@
             <property name="MemberName" />
             <node name="menubar3" type="Menubar">
               <node type="Menu" action="FileAction">
-                <node type="Menuitem" action="quitAction1" />
+                <node type="Menuitem" action="saveAction" />
+                <node type="Menuitem" action="quitAction" />
               </node>
               <node type="Menu" action="HelpAction">
                 <node type="Menuitem" action="aboutAction1" />
@@ -167,7 +175,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="vocab.LessonOverviewView" design-size="300 300">
+  <widget class="Gtk.Bin" id="vocab.LessonOverviewView" design-size="562 408">
     <action-group name="Default">
       <action id="addAction">
         <property name="Type">Action</property>
@@ -189,6 +197,12 @@
         <property name="StockId">gtk-edit</property>
         <signal name="Activated" handler="OnEditActionActivated" />
       </action>
+      <action id="mediaPlayAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-media-play</property>
+        <signal name="Activated" handler="OnMediaPlayActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -204,6 +218,7 @@
               <node type="Toolitem" action="editAction" />
               <node type="Toolitem" action="addAction" />
               <node type="Toolitem" action="removeAction" />
+              <node type="Toolitem" action="mediaPlayAction" />
             </node>
           </widget>
           <packing>
@@ -224,8 +239,12 @@
                 <property name="ShowScrollbars">True</property>
                 <property name="Reorderable">True</property>
                 <property name="RulesHint">True</property>
+                <property name="SearchColumn">0</property>
                 <signal name="RowActivated" handler="OnNodeview3RowActivated" />
                 <signal name="CursorChanged" handler="OnNodeview3CursorChanged" />
+                <signal name="UnselectAll" handler="OnNodeview3UnselectAll" />
+                <signal name="ToggleCursorRow" handler="OnNodeview3ToggleCursorRow" />
+                <signal name="MoveCursor" handler="OnNodeview3MoveCursor" />
               </widget>
             </child>
           </widget>
@@ -284,6 +303,7 @@
                 <child>
                   <widget class="Gtk.Label" id="label3">
                     <property name="MemberName" />
+                    <property name="Visible">False</property>
                     <property name="LabelProp" translatable="yes">Lesson Number</property>
                   </widget>
                   <packing>
@@ -320,6 +340,7 @@
                 <child>
                   <widget class="Gtk.SpinButton" id="spinbutton1">
                     <property name="MemberName" />
+                    <property name="Visible">False</property>
                     <property name="CanFocus">True</property>
                     <property name="Upper">100</property>
                     <property name="PageIncrement">10</property>
@@ -400,8 +421,9 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="vocab.EditPairDialog" design-size="400 300">
+  <widget class="Gtk.Dialog" id="vocab.EditPairDialog" design-size="400 184">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Edit Entry</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>

@@ -5,12 +5,12 @@
       <de>gehen</de>
     </pair>
     <pair>
-      <en>walk</en>
-      <de>gehen</de>
+      <en>321</en>
+      <de>321</de>
     </pair>
     <pair>
-      <en>go,walk</en>
-      <de>gehen</de>
+      <en>987</en>
+      <de>165</de>
     </pair>
   </lesson>
   <lesson id="5" description="second lesson">
@@ -22,8 +22,20 @@
       <en>654</en>
       <de>654</de>
     </pair>
+    <pair>
+      <en>dfg</en>
+      <de>sdfg</de>
+    </pair>
   </lesson>
-  <lesson id="8" description="New Lesson" />
-  <lesson id="9" description="New Lesson" />
-  <lesson id="10" description="New Lesson" />
+  <lesson id="9" description="New Lesson">
+    <pair>
+      <en>sfdg</en>
+      <de>sdfg</de>
+    </pair>
+    <pair>
+      <en>empty entry</en>
+      <de>
+      </de>
+    </pair>
+  </lesson>
 </vocab>

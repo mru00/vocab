@@ -10,27 +10,27 @@ namespace vocab
 	public partial class MainWindow : Gtk.Window
 	{
 
-		Gtk.NodeStore store;
-		Gtk.NodeStore Store {
+		Gtk.NodeStore lessonStore;
+		Gtk.NodeStore LessonStore {
 			get {
-				if (store == null) {
-					store = new Gtk.NodeStore (typeof(LessonNode));					
+				if (lessonStore == null) {
+					lessonStore = new Gtk.NodeStore (typeof(LessonNode));
 				}
-				return store;
+				return lessonStore;
 			}
 		}
 
-		
+
 		LessonOverviewView overview;
-			
+
 		public MainWindow () : base(Gtk.WindowType.Toplevel)
 		{
 			Build ();
 			load ();
 			
-			overview = new LessonOverviewView(Store);
+			overview = new LessonOverviewView (LessonStore);
 			overview.openLesson += OnOpenLesson;
-			overview.ShowAll();
+			overview.ShowAll ();
 			placeholderwidget1.Current = overview;
 			
 		}
@@ -48,71 +48,74 @@ namespace vocab
 			
 			foreach (XmlNode ln in lessonNodes) {
 				
-				int id = Convert.ToInt32 (getAttributeOrDefault(ln,"id", "-1"));
-				string description = getAttributeOrDefault(ln, "description", "No description set");
+				int id = Convert.ToInt32 (getAttributeOrDefault (ln, "id", "-1"));
+				string description = getAttributeOrDefault (ln, "description", "No description set");
 				
 				var lesson = new LessonNode (id, description);
 				
 				var pairNodes = ln.SelectNodes ("pair");
 				foreach (XmlNode pn in pairNodes) {
-					lesson.PairStore.AddNode(new PairNode(pn.SelectSingleNode("en/text()").Value, 
-					                                      pn.SelectSingleNode("de/text()").Value));
+					lesson.PairStore.AddNode (new PairNode (SelectTextNode(pn,"en"), SelectTextNode(pn, "de")));
 				}
 				
-				Store.AddNode (lesson);
+				LessonStore.AddNode (lesson);
 			}
 		}
 
-		private void save() {
+		string SelectTextNode(XmlNode n, string name) {
+			var node = n.SelectSingleNode (name + "/text()");
+			if (node !=null) {
+				return node.Value;
+			}
+			return "";
+		}
+		
+		private void save ()
+		{
 			XmlDataDocument xml_doc = new XmlDataDocument ();
-			XmlNode root = xml_doc.CreateElement("vocab");
-						
-			foreach (LessonNode l in Store) {
+			XmlNode root = xml_doc.CreateElement ("vocab");
+			
+			foreach (LessonNode l in LessonStore) {
 				
-				XmlNode lesson = xml_doc.CreateElement("lesson");
+				XmlNode lesson = xml_doc.CreateElement ("lesson");
 				
-				XmlAttribute a_id = xml_doc.CreateAttribute("id");
-				XmlAttribute a_description = xml_doc.CreateAttribute("description");
-				a_id.Value = l.Id.ToString();
+				XmlAttribute a_id = xml_doc.CreateAttribute ("id");
+				XmlAttribute a_description = xml_doc.CreateAttribute ("description");
+				a_id.Value = l.Id.ToString ();
 				a_description.Value = l.Description;
 				
-				
-				
-				lesson.Attributes.Append(a_id);
-				lesson.Attributes.Append(a_description);
-				
+				lesson.Attributes.Append (a_id);
+				lesson.Attributes.Append (a_description);
 				
 				foreach (PairNode p in l.PairStore) {
-				
-					XmlNode pair = xml_doc.CreateElement("pair");
 					
-					XmlNode en = xml_doc.CreateElement("en");
-					XmlNode de = xml_doc.CreateElement("de");
+					XmlNode pair = xml_doc.CreateElement ("pair");
+					
+					XmlNode en = xml_doc.CreateElement ("en");
+					XmlNode de = xml_doc.CreateElement ("de");
 					
 					en.InnerText = p.En;
 					de.InnerText = p.De;
 					
-					pair.AppendChild(en);
-					pair.AppendChild(de);
-				
-					lesson.AppendChild(pair);
+					pair.AppendChild (en);
+					pair.AppendChild (de);
+					
+					lesson.AppendChild (pair);
 				}
 				
-				root.AppendChild(lesson);
+				root.AppendChild (lesson);
 			}
 			
+			xml_doc.AppendChild (root);
+			xml_doc.Save (xml_path);
 			
-			xml_doc.AppendChild(root);
-			
-			xml_doc.Save(xml_path);
-			
-			
-
 		}
-		
-		private string getAttributeOrDefault(XmlNode n, string attribute, string _default) {
+
+		private string getAttributeOrDefault (XmlNode n, string attribute, string _default)
+		{
 			var att = n.Attributes[attribute];
-			if (att==null) return _default;
+			if (att == null)
+				return _default;
 			return att.Value;
 		}
 
@@ -128,26 +131,29 @@ namespace vocab
 
 		#endregion
 
-		void OnOpenLesson(object o, System.EventArgs args) {
-			var args2 = (OpenLessonEventArgs) args;
+		void OnOpenLesson (object o, System.EventArgs args)
+		{
+			var args2 = (OpenLessonEventArgs)args;
 			var lesson = args2.Node;
-			var view = new LessonView(lesson);
-			view.ShowAll();
+			var view = new LessonView (lesson);
+			view.ShowAll ();
 			view.closeEvent += OnCloseLesson;
-			ShowAll();
+			ShowAll ();
 			
 			placeholderwidget1.Current = view;
 		}
-		
-		void OnCloseLesson(object o, System.EventArgs args) {
+
+		void OnCloseLesson (object o, System.EventArgs args)
+		{
 			
 			Widget old = placeholderwidget1.Current;
 			placeholderwidget1.Current = overview;
-			old.Destroy();
+			old.Destroy ();
 		}
-		
+
 		protected virtual void OnAboutAction1Activated (object sender, System.EventArgs e)
-		{			var d = new AboutDialog ();
+		{
+			var d = new AboutDialog ();
 			d.Version = "1.0";
 			d.Website = "http://sisyphus.teil.cc/~mru";
 			d.Authors = new string[] { "mru" };
@@ -155,18 +161,26 @@ namespace vocab
 			d.Run ();
 			d.Destroy ();
 		}
-		
+
 		protected virtual void OnQuitAction1Activated (object sender, System.EventArgs e)
 		{
-			save();
+			save ();
 			Application.Quit ();
 		}
 		
+		protected virtual void OnSaveActionActivated (object sender, System.EventArgs e)
+		{
+			save();
+		}
+		
+		
 	}
-	
-	public class OpenLessonEventArgs : EventArgs {
+
+	public class OpenLessonEventArgs : EventArgs
+	{
 		public LessonNode Node;
-		public OpenLessonEventArgs(LessonNode n) {
+		public OpenLessonEventArgs (LessonNode n)
+		{
 			Node = n;
 		}
 	}

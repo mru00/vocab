@@ -4,12 +4,12 @@ using System.Data;
 using System.Xml;
 using Gtk;
 using System.Collections;
+using System.IO;
 
 namespace vocab
 {
 	public partial class MainWindow : Gtk.Window
 	{
-
 		Gtk.NodeStore lessonStore;
 		Gtk.NodeStore LessonStore {
 			get {
@@ -37,39 +37,44 @@ namespace vocab
 
 
 
-		private const String xml_path = "/home/mru/uni/current/dotnet/vocab/vocab/myvocab.xml";
+		private String xml_path = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments) + "/myvocab.xml";
 		private void load ()
 		{
-			XmlDataDocument xml_doc = new XmlDataDocument ();
-			
-			xml_doc.Load (xml_path);
-			
-			var lessonNodes = xml_doc.SelectNodes ("//lesson");
-			
-			foreach (XmlNode ln in lessonNodes) {
+			try {
+				XmlDataDocument xml_doc = new XmlDataDocument ();
 				
-				int id = Convert.ToInt32 (getAttributeOrDefault (ln, "id", "-1"));
-				string description = getAttributeOrDefault (ln, "description", "No description set");
+				xml_doc.Load (xml_path);
 				
-				var lesson = new LessonNode (id, description);
+				var lessonNodes = xml_doc.SelectNodes ("//lesson");
 				
-				var pairNodes = ln.SelectNodes ("pair");
-				foreach (XmlNode pn in pairNodes) {
-					lesson.PairStore.AddNode (new PairNode (SelectTextNode(pn,"en"), SelectTextNode(pn, "de")));
+				foreach (XmlNode ln in lessonNodes) {
+					
+					int id = Convert.ToInt32 (getAttributeOrDefault (ln, "id", "-1"));
+					string description = getAttributeOrDefault (ln, "description", "No description set");
+					
+					var lesson = new LessonNode (id, description);
+					
+					var pairNodes = ln.SelectNodes ("pair");
+					foreach (XmlNode pn in pairNodes) {
+						lesson.PairStore.AddNode (new PairNode (SelectTextNode (pn, "en"), SelectTextNode (pn, "de")));
+					}
+					
+					LessonStore.AddNode (lesson);
 				}
+			} catch (FileNotFoundException) {
 				
-				LessonStore.AddNode (lesson);
 			}
 		}
 
-		string SelectTextNode(XmlNode n, string name) {
+		string SelectTextNode (XmlNode n, string name)
+		{
 			var node = n.SelectSingleNode (name + "/text()");
-			if (node !=null) {
+			if (node != null) {
 				return node.Value;
 			}
 			return "";
 		}
-		
+
 		private void save ()
 		{
 			XmlDataDocument xml_doc = new XmlDataDocument ();
@@ -167,10 +172,10 @@ namespace vocab
 			save ();
 			Application.Quit ();
 		}
-		
+
 		protected virtual void OnSaveActionActivated (object sender, System.EventArgs e)
 		{
-			save();
+			save ();
 		}
 		
 		

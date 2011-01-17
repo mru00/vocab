@@ -106,24 +106,28 @@
     <action-group name="Default">
       <action id="addAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-add</property>
         <signal name="Activated" handler="OnAddActionActivated" />
       </action>
       <action id="closeAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-close</property>
         <signal name="Activated" handler="OnCloseActionActivated" />
       </action>
       <action id="editAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-edit</property>
         <signal name="Activated" handler="OnEditActionActivated" />
       </action>
       <action id="removeAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-remove</property>
         <signal name="Activated" handler="OnRemoveActionActivated" />
@@ -154,6 +158,20 @@
           </packing>
         </child>
         <child>
+          <widget class="Gtk.Entry" id="entry3">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
             <property name="MemberName" />
             <property name="ShadowType">In</property>
@@ -168,7 +186,7 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">2</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
@@ -179,12 +197,14 @@
     <action-group name="Default">
       <action id="addAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-add</property>
         <signal name="Activated" handler="OnAddActionActivated" />
       </action>
       <action id="removeAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes">_Remove</property>
         <property name="ShortLabel" translatable="yes">_Remove</property>
         <property name="StockId">gtk-remove</property>
@@ -199,6 +219,7 @@
       </action>
       <action id="mediaPlayAction">
         <property name="Type">Action</property>
+        <property name="IsImportant">True</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-media-play</property>
         <signal name="Activated" handler="OnMediaPlayActionActivated" />
@@ -236,15 +257,13 @@
               <widget class="Gtk.NodeView" id="nodeview3">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
+                <property name="Events">ButtonPressMask</property>
                 <property name="ShowScrollbars">True</property>
                 <property name="Reorderable">True</property>
                 <property name="RulesHint">True</property>
                 <property name="SearchColumn">0</property>
                 <signal name="RowActivated" handler="OnNodeview3RowActivated" />
                 <signal name="CursorChanged" handler="OnNodeview3CursorChanged" />
-                <signal name="UnselectAll" handler="OnNodeview3UnselectAll" />
-                <signal name="ToggleCursorRow" handler="OnNodeview3ToggleCursorRow" />
-                <signal name="MoveCursor" handler="OnNodeview3MoveCursor" />
               </widget>
             </child>
           </widget>
@@ -554,6 +573,7 @@
           <widget class="Gtk.Button" id="buttonOk">
             <property name="MemberName" />
             <property name="CanDefault">True</property>
+            <property name="HasDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>

@@ -1,3 +1,8 @@
+// vocab - simple vocabulary trainer
+// 
+// mru 2011-01
+// 
+
 using System;
 using Gtk;
 using System.Windows.Forms;

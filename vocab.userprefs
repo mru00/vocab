@@ -1,15 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="vocab/LessonOverviewView.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="vocab/MainWindow.cs" ctype="Workbench">
     <Files>
-      <File FileName="vocab/LessonView.cs" Line="40" Column="40" />
-      <File FileName="vocab/LessonOverviewView.cs" Line="18" Column="4" />
-      <File FileName="vocab/MainWindow.cs" Line="21" Column="4" />
-      <File FileName="vocab/Main.cs" Line="1" Column="1" />
+      <File FileName="vocab/LessonView.cs" Line="14" Column="29" />
+      <File FileName="vocab/LessonOverviewView.cs" Line="17" Column="33" />
+      <File FileName="vocab/MainWindow.cs" Line="186" Column="1" />
+      <File FileName="vocab/Main.cs" Line="6" Column="1" />
+      <File FileName="vocab/SimpleAssessmentWidget.cs" Line="91" Column="20" />
+      <File FileName="vocab/PlaceHolderWidget.cs" Line="6" Column="1" />
+      <File FileName="vocab/LessonNode.cs" Line="29" Column="42" />
+      <File FileName="vocab/EditPairDialog.cs" Line="6" Column="1" />
+      <File FileName="vocab/EditLessonDialog.cs" Line="6" Column="1" />
+      <File FileName="vocab/AssemblyInfo.cs" Line="6" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/mru/uni/current/dotnet/vocab/vocab/SimpleAssessmentWidget.cs" line="85" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore">
     <Watch file="vocab/MainWindow.cs" line="78" offsetX="792" offsetY="1221" expression="lesson.Attributes.Count" liveUpdate="False" />

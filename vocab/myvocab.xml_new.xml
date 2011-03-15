@@ -1,0 +1,10 @@
+<vocab>
+  <lesson id="1" description="first lesson">
+    <pair>
+      <en>go</en>
+      <de>gehen</de>
+    </pair>
+  </lesson>
+  <lesson id="2" description="second lesson" />
+  <lesson id="100" description="No description set" />
+</vocab>

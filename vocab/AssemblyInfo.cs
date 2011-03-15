@@ -1,3 +1,8 @@
+// vocab - simple vocabulary trainer
+// 
+// mru 2011-01
+// 
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 

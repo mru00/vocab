@@ -1,3 +1,8 @@
+// vocab - simple vocabulary trainer
+// 
+// mru 2011-01
+// 
+
 using System;
 using Gtk;
 namespace vocab
@@ -77,6 +82,11 @@ namespace vocab
 		{
 			CanEditRemove = true;
 		}
+		
+		protected virtual void OnEntry3Activated (object sender, System.EventArgs e)
+		{
+		}
+		
 		
 	}
 }

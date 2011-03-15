@@ -1,3 +1,8 @@
+// vocab - simple vocabulary trainer
+// 
+// mru 2011-01
+// 
+
 
 using System;
 using System.Data;
@@ -20,30 +25,47 @@ namespace vocab
 			}
 		}
 
+		public string StatusBarText {
+			set { label3.Text = value; }
+		}
+
+		public string WindowTitle {
+			set {
+				const string basetitle = "Vocab";
+				if (value != "") {
+					Title = basetitle + " - " + value;
+				} else {
+					Title = basetitle;
+				}
+			}
+		}
 
 		LessonOverviewView overview;
 
 		public MainWindow () : base(Gtk.WindowType.Toplevel)
 		{
 			Build ();
-			load ();
+			import (xml_path);
 			
 			overview = new LessonOverviewView (LessonStore);
 			overview.openLesson += OnOpenLesson;
+			overview.startAssessment += OnStartAssignment;
 			overview.ShowAll ();
 			placeholderwidget1.Current = overview;
 			
+			StatusBarText = "loaded";
 		}
 
 
+		private String xml_path = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData) + "/myvocab.xml";
 
-		private String xml_path = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments) + "/myvocab.xml";
-		private void load ()
+		
+		private void import (string filename)
 		{
 			try {
 				XmlDataDocument xml_doc = new XmlDataDocument ();
 				
-				xml_doc.Load (xml_path);
+				xml_doc.Load (filename);
 				
 				var lessonNodes = xml_doc.SelectNodes ("//lesson");
 				
@@ -65,7 +87,7 @@ namespace vocab
 				
 			}
 		}
-
+		
 		string SelectTextNode (XmlNode n, string name)
 		{
 			var node = n.SelectSingleNode (name + "/text()");
@@ -77,6 +99,7 @@ namespace vocab
 
 		private void save ()
 		{
+			
 			XmlDataDocument xml_doc = new XmlDataDocument ();
 			XmlNode root = xml_doc.CreateElement ("vocab");
 			
@@ -124,12 +147,11 @@ namespace vocab
 			return att.Value;
 		}
 
-
-
 		#region event handlers
 
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
+			save();
 			Application.Quit ();
 			a.RetVal = true;
 		}
@@ -146,15 +168,49 @@ namespace vocab
 			ShowAll ();
 			
 			placeholderwidget1.Current = view;
+			StatusBarText = "In Lesson '" + lesson.Description + "'";
+			WindowTitle = lesson.Description;
 		}
 
+		
+		void OnStartAssignment (object o, System.EventArgs args)
+		{
+			var args2 = (StartAssessmentEventArgs)args;
+			var lesson = args2.lesson;
+			if (lesson.PairCount == 0) {
+				var d =  new MessageDialog(null, DialogFlags.Modal, MessageType.Info, ButtonsType.Close, "No entries in this Lesson, no assessment possible");
+				d.Run();
+				d.Destroy();
+				return;
+			}
+			var view = new SimpleAssessmentWidget (lesson);
+			
+			view.ShowAll ();
+			view.closeEvent += OnCloseAssessment;
+			ShowAll ();
+			
+			placeholderwidget1.Current = view;
+			StatusBarText = "Assessment for '" + lesson.Description + "'";
+			WindowTitle = lesson.Description;
+		}		
+		
 		void OnCloseLesson (object o, System.EventArgs args)
 		{
-			
 			Widget old = placeholderwidget1.Current;
 			placeholderwidget1.Current = overview;
 			old.Destroy ();
+			StatusBarText = "";
+			WindowTitle = "";
 		}
+		
+		void OnCloseAssessment (object o, System.EventArgs args)
+		{
+			Widget old = placeholderwidget1.Current;
+			placeholderwidget1.Current = overview;
+			old.Destroy ();
+			StatusBarText = "";
+			WindowTitle = "";
+		}		
 
 		protected virtual void OnAboutAction1Activated (object sender, System.EventArgs e)
 		{
@@ -178,15 +234,35 @@ namespace vocab
 			save ();
 		}
 		
-		
+		protected virtual void OnImportActionActivated (object sender, System.EventArgs e)
+		{
+			var dlg = new FileChooserDialog("Select a file to import", this, FileChooserAction.Open, Stock.Open, ResponseType.Ok, Stock.Cancel, ResponseType.Cancel);
+			dlg.Filter = new FileFilter();
+			dlg.Filter.AddMimeType("application/xml");
+			if (dlg.Run() == (int)ResponseType.Ok) {
+				import(dlg.Filename);		
+			}
+			dlg.Destroy();
+		}		
 	}
 
-	public class OpenLessonEventArgs : EventArgs
+	[Serializable]
+	public sealed class OpenLessonEventArgs : EventArgs
 	{
 		public LessonNode Node;
 		public OpenLessonEventArgs (LessonNode n)
 		{
 			Node = n;
+		}
+	}
+	
+	[Serializable]
+	public sealed class StartAssessmentEventArgs : EventArgs
+	{
+		public LessonNode lesson;
+		public StartAssessmentEventArgs (LessonNode lesson)
+		{
+			this.lesson = lesson;
 		}
 	}
 	

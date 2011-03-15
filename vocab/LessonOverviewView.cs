@@ -1,3 +1,8 @@
+// vocab - simple vocabulary trainer
+// 
+// mru 2011-01
+// 
+
 using System;
 using Gtk;
 namespace vocab
@@ -7,9 +12,10 @@ namespace vocab
 	{
 
 		public event EventHandler openLesson;
+		public event EventHandler startAssessment;
 		
 		public Boolean CanEditRemove {
-			set { editAction.Sensitive = removeAction.Sensitive = value; }
+			set { mediaPlayAction.Sensitive = editAction.Sensitive = removeAction.Sensitive = value; }
 		}
 
 		public LessonOverviewView (Gtk.NodeStore store)
@@ -78,6 +84,7 @@ namespace vocab
 		{
 			NodeView v = (NodeView)o;
 			var lesson = (LessonNode)v.NodeSelection.SelectedNode;
+			if (lesson != null)
 			openLesson.Invoke (this, new OpenLessonEventArgs (lesson));
 		}
 
@@ -88,6 +95,9 @@ namespace vocab
 		
 		protected virtual void OnMediaPlayActionActivated (object sender, System.EventArgs e)
 		{
+			var lesson = (LessonNode)nodeview3.NodeSelection.SelectedNode;
+			if (lesson != null)
+			startAssessment.Invoke(this, new StartAssessmentEventArgs(lesson));
 		}	
 	}
 }

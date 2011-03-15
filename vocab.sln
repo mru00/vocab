@@ -22,7 +22,7 @@ Global
 		StartupItem = vocab\vocab.csproj
 		Policies = $0
 		$0.StandardHeader = $1
-		$1.Text = @// vocab - simple vocabulary trainer\n//\n// mru 2011-01\n
+		$1.Text = @vocab - simple vocabulary trainer\n\nmru 2011-01\n
 		$1.inheritsSet = Apache2License
 	EndGlobalSection
 EndGlobal

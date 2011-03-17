@@ -6,6 +6,13 @@ mru, 2011
 
 Built with Mono.NET on .NET/GTK#
 
+
+http://monodevelop.com/
+
+http://www.mono-project.com/GtkSharp
+
+
+
 Screenshots
 -----------
 
